@@ -16,11 +16,11 @@ Author: Pun1sher + Arkaja
 crack() the jail to get the flag. But make sure you get your crypto right.
 ```
 
-## INTRODUCTION ##
+## Introduction ##
 
 This was a very fun challenge to solve from niteCTF which involved knowledge of how AES-CBC worked and how to bypass a blacklist made in python which didn't filter all the interesting functions we could `exec()`.
 
-## CODE ANALYSIS ##
+## Code Analysis ##
 
 As we open the file, we can see that we have three functions, `encrypt(msg), decrypt(msg,iv), weirdify(inp)`. which are all based on `AES-CBC 128bit` mode.
 
@@ -75,7 +75,7 @@ It can be done because `0 == A XOR A` and because `0 XOR A = A`. It's reversible
 
 So our objective will be to get a new IV like `NEWIV = PT ^ OURPT ^ OLDIV`.
 
-## EXPLOIT ##
+## Exploit ##
 
 First of all we get our input from IO, for that we'll use `pwntools`.
 
