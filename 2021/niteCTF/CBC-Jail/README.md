@@ -1,6 +1,15 @@
+---
+author: xtylez
+categories: ctf
+date: 2021-12-13 20:00:00 +0100
+layout: post
+tags: [xtylez, crypto]
+title: NiteCTF 2021 - CBC-Jail [Crypto/Pwn]
+---
+
 ```
 Solves: 34
-Type:  	pwn/crypto
+Type:  	crypto/pwn
 Difficulty: Easy
 Author: Pun1sher + Arkaja
 
@@ -13,7 +22,7 @@ This was a very fun challenge to solve from niteCTF which involved knowledge of 
 
 ## CODE ANALYSIS ##
 
-As we open the file, we can see that we have three functinos, `encrypt(msg), decrypt(msg,iv), weirdify(inp)`. which are all based on `AES-CBC 128bit` mode.
+As we open the file, we can see that we have three functions, `encrypt(msg), decrypt(msg,iv), weirdify(inp)`. which are all based on `AES-CBC 128bit` mode.
 
 We can also see that the KEY and IV are randomly generated each time we open the connection to the server.
 
@@ -58,11 +67,11 @@ First I'll append two images so we can understand how AES-CBC works and why the 
 ![image alt](https://upload.wikimedia.org/wikipedia/commons/d/d3/Cbc_encryption.png "AES-CBC Encrypt")
 ![image alt](https://upload.wikimedia.org/wikipedia/commons/6/66/Cbc_decryption.png "AES-CBC Decrypt")
 
-As we can see, the Plaintext is first XOR'ed with the IV and then ciphered with the key. Same for decryption, first we decrypt and then we XOR.
+As we can see, the Plaintext is first XOR'ed with the IV and then ciphered with the KEY. Same for decryption, first we decrypt and then we XOR.
 
 As we can manipulate the IV, we could try to modify it so when we send the same ciphertext which we already know it's plaintext, XOR's to our desired plaintext.
 
-It can be done because `0 == A XOR A` and because `0 XOR A = A`. It's reversable operation.
+It can be done because `0 == A XOR A` and because `0 XOR A = A`. It's reversible operation.
 
 So our objective will be to get a new IV like `NEWIV = PT ^ OURPT ^ OLDIV`.
 
@@ -133,4 +142,4 @@ nite{Th3__gr3at_esc4p3}
 server.py
 ```
 
-Challenge source code: https://github.com/eskardinha/CTF-Writeups/tree/master/2021/niteCTF/CBC-Jail
+[Challenge source code](https://github.com/eskardinha/CTF-Writeups/tree/master/2021/niteCTF/CBC-Jail)
